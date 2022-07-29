@@ -1,8 +1,15 @@
-import express from "express";
 import { ApolloServer, gql } from "apollo-server-express";
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import http from "http";
+import express from "express";
 import cors from "cors";
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+const httpServer = http.createServer(app);
 
 import { getCoursesData } from "./fetchCourses";
 
@@ -92,11 +99,6 @@ const resolvers = {
     },
   },
 };
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-const httpServer = http.createServer(app);
 
 const startApolloServer = async (app, httpServer) => {
   const server = new ApolloServer({
