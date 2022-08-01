@@ -4,6 +4,14 @@ import http from "http";
 import express from "express";
 import cors from "cors";
 
+import { getCoursesData } from "./fetchCourses";
+
+async function run() {
+  courses = await getCoursesData();
+}
+
+run()
+
 const app = express();
 
 app.use(cors());
@@ -11,15 +19,8 @@ app.use(express.json());
 
 const httpServer = http.createServer(app);
 
-import { getCoursesData } from "./fetchCourses";
-
 let courses;
 
-async function run() {
-  courses = await getCoursesData();
-}
-
-run()
 
 const typeDefs = gql`
 
